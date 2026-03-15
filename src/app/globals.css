@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 @theme {
+  /* Custom responsive breakpoints(min-width) */
+  --breakpoint-mobile: 0rem;  /* 0px  — mobile threshold  */
+  --breakpoint-tablet: 48rem;  /* 768px  — tablet threshold  */
+  --breakpoint-laptop: 75rem;    /* 1200px — desktop threshold */
+  --breakpoint-desktop: 120rem;    /* 1920px — desktop threshold */
+
   /* Background */
   --color-bg-base: #020617;       /* slate-950 */
   --color-surface: #0f172a;       /* slate-900 */
@@ -20,8 +26,18 @@
 @layer base {
   html, body {
     background-color: var(--color-bg-base);
-    color: #f1f5f9; /* slate-100 */
+    color: #f1f5f9;
     font-family: var(--font-ui);
     -webkit-font-smoothing: antialiased;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) var(--color-bg-base);
+  }
+
+  /* Tablet+(≥600px): 뷰포트 고정, document scroll 차단 */
+  @media (min-width: 37.5rem) {
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
   }
 }

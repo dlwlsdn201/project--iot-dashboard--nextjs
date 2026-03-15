@@ -77,6 +77,8 @@ export interface EventLogItem {
   time: string;
   severity: EventSeverity;
   message: string;
+  /** 확인 처리된 시각 (confirmed 상태일 때 존재) */
+  confirmedAt?: string;
 }
 
 /** 실시간 이벤트 로그 목록 (W5) */
