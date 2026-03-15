@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  /* Background */
+  --color-bg-base: #020617;       /* slate-950 */
+  --color-surface: #0f172a;       /* slate-900 */
+  --color-border: #1e293b;        /* slate-800 */
+
+  /* Status */
+  --color-primary: #3b82f6;       /* blue-500 */
+  --color-danger: #e11d48;        /* rose-600 */
+  --color-eco: #10b981;           /* emerald-500 */
+  --color-warning: #f59e0b;       /* amber-500 */
+
+  /* Typography — variables injected by next/font via html element */
+  --font-ui: var(--font-inter), sans-serif;
+  --font-data: var(--font-jetbrains-mono), monospace;
+}
+
+@layer base {
+  html, body {
+    background-color: var(--color-bg-base);
+    color: #f1f5f9; /* slate-100 */
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+  }
+}
