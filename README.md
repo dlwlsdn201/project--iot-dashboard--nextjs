@@ -47,7 +47,7 @@ src/
 │       └── model/
 │           ├── energyStore.ts   # FIFO 버퍼 atom
 │           ├── eventStore.ts    # 이벤트 확인/아카이브 atom
-│           └── mockData.ts
+│           └── mockData.ts      # 오늘 날짜 기준 동적 생성 샘플 데이터
 └── shared/       # 범용 UI 컴포넌트, 유틸리티, 디자인 시스템
     ├── ui/
     └── lib/
@@ -100,6 +100,30 @@ Desktop (≥ 1920px) : grid-cols-12 grid-rows-3, 7위젯 고밀도 배치
 
 태블릿 이상에서는 `html/body { overflow: hidden }`으로 document scroll을 완전히 차단하고, CSS Grid의 `grid-template-rows: repeat(3, 1fr)`로 Header + Grid = 100vh 공식을 강제합니다.
 
+### 6. 오늘 날짜 기준 동적 샘플 데이터 생성
+
+`mockData.ts`는 정적 배열 대신, 모듈 로드 시점의 `new Date()`를 기준으로 모든 데이터를 생성합니다. 브라우저 새로고침마다 값이 랜덤 초기화되며, 각 차트의 X축 레이블은 실제 날짜를 반영합니다.
+
+| 위젯 | X축 기준 |
+|---|---|
+| W2 7-Day Trend | 오늘 포함 최근 7일 실제 날짜(`M/D`) |
+| W3 Carbon — 주간 | 어제 포함 직전 7일 실제 요일명 |
+| W3 Carbon — 월간 | 직전 달까지 과거 11개월 롤링 윈도우 |
+| W3 Carbon — 연간 | 현재 연도 포함 최근 6년 |
+| W6 YoY Comparison | 직전 달까지 과거 11개월 롤링 윈도우 |
+| W7 5-Year Prediction | 현재 연도 기준 과거 4년 + 현재(bridge) + 미래 1년 |
+
+### 7. W7 — 실선·점선 교차 연결(Intersection Bridge)
+
+Recharts의 `<Line />` 컴포넌트는 단일 스타일만 지원하므로, 과거 실선과 미래 점선을 하나의 연속된 선으로 표현하기 위해 두 선의 교차점(현재 연도)에 동일한 값을 공유하는 **bridge point**를 삽입하는 데이터 파싱 로직을 구현했습니다.
+
+```ts
+{ year: '2026년', actual: 3180, forecast: 3180 }, // bridge point
+{ year: '2027년', actual: null,  forecast: 3050 }, // 점선 시작
+```
+
+이를 통해 두 선이 현재 시점에서 끊기지 않고 자연스럽게 이어지며, `ReferenceLine`으로 과거와 미래의 경계를 시각적으로 명확히 구분합니다.
+
 ---
 
 ## Dashboard Widgets
@@ -111,8 +135,8 @@ Desktop (≥ 1920px) : grid-cols-12 grid-rows-3, 7위젯 고밀도 배치
 | **W3** Carbon Emission | 주/월/년 필터 탭이 포함된 탄소 배출량 막대 차트 |
 | **W4** Load Gauge | SVG로 직접 구현한 반원형 게이지. 부하율에 따라 색상 동적 변환 |
 | **W5** Event Alerts | 클릭으로 이벤트 처리 완료 처리 → Confirmed 아카이브 이동. 모달에서 검색 필터링 제공 |
-| **W6** YoY Comparison | 전년(Line) 대비 올해(Bar) Combo 차트 |
-| **W7** 5-Year Prediction | 과거 실측(실선)과 미래 예측(점선 `strokeDasharray`) 라인 차트 |
+| **W6** YoY Comparison | 전년 동월(Line) 대비 당해연도(Bar) Combo 차트. 11개월 롤링 윈도우 |
+| **W7** 5-Year Prediction | 과거 실측(실선)과 미래 예측(점선 `strokeDasharray`) 라인 차트. 현재 시점 `ReferenceLine` 포함 |
 
 ---
 
@@ -146,4 +170,3 @@ pnpm exec tsc --noEmit
 2. **정보 밀도와 가독성의 균형** — 한 화면에 많은 데이터를 최대한 표현하면서도 이상 징후를 즉각 인지할 수 있게 하려면 어떻게 해야하는가?
 
 ---
-
