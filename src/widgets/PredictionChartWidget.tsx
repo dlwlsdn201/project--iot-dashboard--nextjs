@@ -30,6 +30,7 @@ export function PredictionChartWidget() {
               domain={[3000, 4200]}
               tick={{ fontSize: 10, fontFamily: 'var(--font-jetbrains-mono)', fill: '#64748b' }}
               tickLine={false}
+              tickFormatter={(v: number) => v.toLocaleString('ko-KR')}
             />
             <Tooltip
               contentStyle={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: 6, fontSize: 12 }}
@@ -37,7 +38,7 @@ export function PredictionChartWidget() {
             />
             <Legend wrapperStyle={{ fontSize: 11, color: '#94a3b8' }} />
             <ReferenceLine
-              x="2025"
+              x="2025년"
               stroke="#334155"
               strokeDasharray="4 2"
               label={{ value: 'Now', fill: '#64748b', fontSize: 10 }}

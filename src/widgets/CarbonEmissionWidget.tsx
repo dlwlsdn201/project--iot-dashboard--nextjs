@@ -61,6 +61,7 @@ export function CarbonEmissionWidget() {
                 fill: "#64748b",
               }}
               tickLine={false}
+              tickFormatter={(v: number) => v.toLocaleString('ko-KR')}
             />
             <Tooltip
               contentStyle={{

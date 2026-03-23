@@ -29,6 +29,7 @@ export function YoYComparisonWidget() {
             <YAxis
               tick={{ fontSize: 10, fontFamily: 'var(--font-jetbrains-mono)', fill: '#64748b' }}
               tickLine={false}
+              tickFormatter={(v: number) => v.toLocaleString('ko-KR')}
             />
             <Tooltip
               contentStyle={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: 6, fontSize: 12 }}
