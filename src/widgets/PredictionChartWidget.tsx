@@ -12,16 +12,20 @@ import {
   ReferenceLine,
 } from "recharts";
 import { Card } from "@/shared/ui/Card";
-import { predictionData } from "@/entities/energy/model/mockData";
+import {
+  predictionData,
+  predictionCurrentYearLabel,
+} from "@/entities/energy/model/mockData";
+import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 export function PredictionChartWidget() {
   return (
-    <Card title='5-Year Prediction — MWh'>
+    <Card title='과거 5년 기반의 내년 전력 사용량 예측'>
       <div className='flex-1 min-h-0'>
         <ResponsiveContainer width='100%' height='100%'>
           <LineChart
             data={predictionData}
-            margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+            margin={{ top: 4, right: 4, left: -8, bottom: 0 }}>
             <CartesianGrid strokeDasharray='3 3' stroke='#1e293b' />
             <XAxis
               dataKey='year'
@@ -40,6 +44,15 @@ export function PredictionChartWidget() {
                 fill: "#64748b",
               }}
               tickLine={false}
+              label={{
+                value: "MWh",
+                fontSize: 10,
+                fontFamily: "var(--font-ui)",
+                fill: "#64748b",
+                position: "left",
+                offset: -12,
+                angle: -90,
+              }}
               tickFormatter={(v: number) => v.toLocaleString("ko-KR")}
             />
             <Tooltip
@@ -50,10 +63,13 @@ export function PredictionChartWidget() {
                 fontSize: 12,
               }}
               itemStyle={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              formatter={(value: ValueType | undefined) =>
+                typeof value === "number" ? value.toLocaleString("ko-KR") : ""
+              }
             />
             <Legend wrapperStyle={{ fontSize: 11, color: "#94a3b8" }} />
             <ReferenceLine
-              x='2026년'
+              x={predictionCurrentYearLabel}
               stroke='#334155'
               strokeDasharray='4 2'
               label={{ value: "현재", fill: "#64748b", fontSize: 10 }}
@@ -61,7 +77,7 @@ export function PredictionChartWidget() {
             <Line
               type='monotone'
               dataKey='actual'
-              name='Actual'
+              name='실제'
               stroke='#3b82f6'
               strokeWidth={2}
               dot={{ r: 3, fill: "#3b82f6" }}
@@ -71,7 +87,7 @@ export function PredictionChartWidget() {
             <Line
               type='monotone'
               dataKey='forecast'
-              name='Forecast'
+              name='예측'
               stroke='#f59e0b'
               strokeWidth={2}
               strokeDasharray='6 3'

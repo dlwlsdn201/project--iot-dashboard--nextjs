@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useAtomValue } from 'jotai';
+import { useState } from "react";
+import { useAtomValue } from "jotai";
 import {
   LineChart,
   Line,
@@ -10,19 +10,19 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
-} from 'recharts';
-import { Card } from '@/shared/ui/Card';
-import { energyDataAtom } from '@/entities/energy/model/energyStore';
-import { useSocketMock } from '@/features/websocket/useSocketMock';
-import { useWindowWidth } from '@/shared/lib/useWindowWidth';
+} from "recharts";
+import { Card } from "@/shared/ui/Card";
+import { energyDataAtom } from "@/entities/energy/model/energyStore";
+import { useSocketMock } from "@/features/websocket/useSocketMock";
+import { useWindowWidth } from "@/shared/lib/useWindowWidth";
 
 const INTERVAL_OPTIONS = [
-  { label: '1초', value: 1000   },
-  { label: '5초', value: 5000   },
-  { label: '1분', value: 60000  },
+  { label: "1초", value: 1000 },
+  { label: "5초", value: 5000 },
+  { label: "1분", value: 60000 },
 ] as const;
 
-const pad = (n: number) => String(n).padStart(2, '0');
+const pad = (n: number) => String(n).padStart(2, "0");
 
 function formatTimestamp(ts: number, showSeconds: boolean): string {
   const d = new Date(ts);
@@ -52,51 +52,80 @@ export function LiveEnergyChart() {
     <select
       value={intervalMs}
       onChange={(e) => setIntervalMs(Number(e.target.value))}
-      className="bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 px-2 py-1 font-mono focus:outline-none focus:border-blue-500 cursor-pointer"
-    >
+      className='bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 px-2 py-1 font-mono focus:outline-none focus:border-blue-500 cursor-pointer'>
       {INTERVAL_OPTIONS.map((opt) => (
-        <option key={opt.value} value={opt.value}>{opt.label}</option>
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
       ))}
     </select>
   );
 
   return (
-    <Card title="Live Energy — Real-time Power" headerRight={intervalSelect}>
-      <div className="shrink-0 flex items-baseline gap-2 mb-3">
-        <span className="font-mono text-3xl font-bold text-blue-400">
-          {latest ? latest.powerKw.toFixed(0) : '—'}
+    <Card title='실시간 전력 사용량' headerRight={intervalSelect}>
+      <div className='shrink-0 flex items-baseline gap-2 mb-3'>
+        <span className='font-mono text-3xl font-bold text-blue-400'>
+          {latest ? latest.powerKw.toFixed(0) : "—"}
         </span>
-        <span className="text-slate-400 text-sm">kW</span>
-        <span className="ml-auto flex items-center gap-1.5 text-xs text-emerald-400">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <span className='text-slate-400 text-sm'>kW</span>
+        <span className='ml-auto flex items-center gap-1.5 text-xs text-emerald-400'>
+          <span className='inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
           LIVE
         </span>
       </div>
-      <div className="flex-1 min-h-0">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 0, right: 30, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+      <div className='flex-1 min-h-0'>
+        <ResponsiveContainer width='100%' height='100%'>
+          <LineChart
+            data={chartData}
+            margin={{ top: 0, right: 30, left: -16, bottom: 0 }}>
+            <CartesianGrid strokeDasharray='3 3' stroke='#1e293b' />
             <XAxis
-              dataKey="t"
-              tick={{ fontSize: 10, fontFamily: 'var(--font-jetbrains-mono)', fill: '#64748b' }}
+              dataKey='t'
+              tick={{
+                fontSize: 10,
+                fontFamily: "var(--font-jetbrains-mono)",
+                fill: "#64748b",
+              }}
               tickLine={false}
-              interval="preserveStartEnd"
+              interval='preserveStartEnd'
             />
             <YAxis
-              domain={['auto', 'auto']}
-              tick={{ fontSize: 10, fontFamily: 'var(--font-jetbrains-mono)', fill: '#64748b' }}
+              domain={["auto", "auto"]}
+              tick={{
+                fontSize: 10,
+                fontFamily: "var(--font-jetbrains-mono)",
+                fill: "#64748b",
+              }}
+              label={{
+                value: "kW",
+                fontSize: 10,
+                fontFamily: "var(--font-ui)",
+                fill: "#64748b",
+                position: "left",
+                offset: -20,
+                angle: -90,
+              }}
               tickLine={false}
-              tickFormatter={(v: number) => v.toLocaleString('ko-KR')}
+              tickFormatter={(v: number) => v.toLocaleString("ko-KR")}
             />
             <Tooltip
-              contentStyle={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: 6, fontSize: 12 }}
-              labelStyle={{ color: '#94a3b8' }}
-              itemStyle={{ color: '#60a5fa', fontFamily: 'var(--font-jetbrains-mono)' }}
+              contentStyle={{
+                background: "#0f172a",
+                border: "1px solid #1e293b",
+                borderRadius: 6,
+                fontSize: 12,
+              }}
+              labelStyle={{ color: "#94a3b8" }}
+              itemStyle={{
+                color: "#60a5fa",
+                fontFamily: "var(--font-jetbrains-mono)",
+              }}
+              formatter={(v) => (typeof v === 'number' ? v.toLocaleString('ko-KR') : v)}
             />
             <Line
-              type="monotone"
-              dataKey="kw"
-              stroke="#3b82f6"
+              type='monotone'
+              dataKey='kw'
+              stroke='#3b82f6'
               strokeWidth={2}
               dot={false}
               isAnimationActive={false}

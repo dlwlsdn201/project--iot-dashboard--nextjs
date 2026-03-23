@@ -29,17 +29,15 @@ export function CarbonEmissionWidget() {
 
   return (
     <Card
-      title='Carbon Emission — tCO₂'
+      title='탄소(CO₂) 배출량'
       headerRight={
-        <div className='shrink-0 mb-3'>
-          <Tabs items={PERIOD_TABS} value={period} onChange={setPeriod} />
-        </div>
+        <Tabs items={PERIOD_TABS} value={period} onChange={setPeriod} />
       }>
       <div className='flex-1 min-h-0'>
         <ResponsiveContainer width='100%' height='100%'>
           <BarChart
             data={data}
-            margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+            margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
             <CartesianGrid
               strokeDasharray='3 3'
               stroke='#1e293b'
@@ -60,6 +58,15 @@ export function CarbonEmissionWidget() {
                 fontFamily: "var(--font-jetbrains-mono)",
                 fill: "#64748b",
               }}
+              label={{
+                value: "tCO₂-eq",
+                fontSize: 10,
+                fontFamily: "var(--font-ui)",
+                fill: "#64748b",
+                position: "left",
+                offset: -20,
+                angle: -90,
+              }}
               tickLine={false}
               tickFormatter={(v: number) => v.toLocaleString("ko-KR")}
             />
@@ -75,6 +82,7 @@ export function CarbonEmissionWidget() {
                 fontFamily: "var(--font-jetbrains-mono)",
                 color: "#10b981",
               }}
+              formatter={(v) => (typeof v === 'number' ? v.toLocaleString('ko-KR') : v)}
               cursor={{ fill: "#1e293b" }}
             />
             <Bar
