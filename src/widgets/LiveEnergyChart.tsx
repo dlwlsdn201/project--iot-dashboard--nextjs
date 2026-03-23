@@ -31,7 +31,9 @@ function formatTimestamp(ts: number, showSeconds: boolean): string {
 }
 
 export function LiveEnergyChart() {
-  const [intervalMs, setIntervalMs] = useState(5000);
+  const [intervalMs, setIntervalMs] = useState<
+    (typeof INTERVAL_OPTIONS)[number]["value"]
+  >(INTERVAL_OPTIONS[0].value);
   useSocketMock(intervalMs);
 
   const windowWidth = useWindowWidth();
@@ -51,7 +53,11 @@ export function LiveEnergyChart() {
   const intervalSelect = (
     <select
       value={intervalMs}
-      onChange={(e) => setIntervalMs(Number(e.target.value))}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+        setIntervalMs(
+          Number(e.target.value) as (typeof INTERVAL_OPTIONS)[number]["value"],
+        )
+      }
       className='bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 px-2 py-1 font-mono focus:outline-none focus:border-blue-500 cursor-pointer'>
       {INTERVAL_OPTIONS.map((opt) => (
         <option key={opt.value} value={opt.value}>
@@ -120,7 +126,9 @@ export function LiveEnergyChart() {
                 color: "#60a5fa",
                 fontFamily: "var(--font-jetbrains-mono)",
               }}
-              formatter={(v) => (typeof v === 'number' ? v.toLocaleString('ko-KR') : v)}
+              formatter={(v) =>
+                typeof v === "number" ? v.toLocaleString("ko-KR") : v
+              }
             />
             <Line
               type='monotone'
