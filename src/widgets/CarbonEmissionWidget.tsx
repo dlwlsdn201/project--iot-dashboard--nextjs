@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   Cell,
+  Legend,
 } from "recharts";
 import { Card } from "@/shared/ui/Card";
 import { Tabs } from "@/shared/ui/Tabs";
@@ -18,9 +19,9 @@ import { carbonEmissionData } from "@/entities/energy/model/mockData";
 type Period = "weekly" | "monthly" | "yearly";
 
 const PERIOD_TABS = [
-  { label: "Week", value: "weekly" as Period },
-  { label: "Month", value: "monthly" as Period },
-  { label: "Year", value: "yearly" as Period },
+  { label: "주간", value: "weekly" as Period },
+  { label: "월간", value: "monthly" as Period },
+  { label: "연간", value: "yearly" as Period },
 ];
 
 export function CarbonEmissionWidget() {
@@ -61,8 +62,9 @@ export function CarbonEmissionWidget() {
                 fill: "#64748b",
               }}
               tickLine={false}
-              tickFormatter={(v: number) => v.toLocaleString('ko-KR')}
+              tickFormatter={(v: number) => v.toLocaleString("ko-KR")}
             />
+            <Legend wrapperStyle={{ fontSize: 11, color: "#94a3b8" }} />
             <Tooltip
               contentStyle={{
                 background: "#0f172a",

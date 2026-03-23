@@ -60,14 +60,17 @@ export const yoyComparisonData = [
   { month: '12월', lastYear: 345, thisYear: 352 },
 ];
 
-/** 5년 예측 데이터 — 과거(solid) + 미래(dotted) (W7) */
+/** 5년 예측 데이터 — 과거(solid) + 미래(dotted) (W7)
+ * 기준: 오늘(2026-03-23) = 현재 연도
+ * 과거 4년(2022~2025) + 현재(2026, bridge) + 미래 1년(2027)
+ */
 export const predictionData = [
-  { year: '2021년', actual: 3650,     forecast: null  },
   { year: '2022년', actual: 3910,     forecast: null  },
   { year: '2023년', actual: 3540,     forecast: null  },
   { year: '2024년', actual: 3480,     forecast: null  },
   { year: '2025년', actual: 3320,     forecast: null  },
-  { year: '2026년', actual: null,     forecast: 3180  },
+  { year: '2026년', actual: 3180,     forecast: 3180  },  // bridge point: 현재 연도(실측 + 예측 교차)
+  { year: '2027년', actual: null,     forecast: 3050  },
 ];
 
 export type EventSeverity = 'danger' | 'warning' | 'info';

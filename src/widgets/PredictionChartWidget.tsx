@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   LineChart,
@@ -10,57 +10,72 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   ReferenceLine,
-} from 'recharts';
-import { Card } from '@/shared/ui/Card';
-import { predictionData } from '@/entities/energy/model/mockData';
+} from "recharts";
+import { Card } from "@/shared/ui/Card";
+import { predictionData } from "@/entities/energy/model/mockData";
 
 export function PredictionChartWidget() {
   return (
-    <Card title="5-Year Prediction — MWh">
-      <div className="flex-1 min-h-0">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={predictionData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+    <Card title='5-Year Prediction — MWh'>
+      <div className='flex-1 min-h-0'>
+        <ResponsiveContainer width='100%' height='100%'>
+          <LineChart
+            data={predictionData}
+            margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray='3 3' stroke='#1e293b' />
             <XAxis
-              dataKey="year"
-              tick={{ fontSize: 10, fontFamily: 'var(--font-jetbrains-mono)', fill: '#64748b' }}
+              dataKey='year'
+              tick={{
+                fontSize: 10,
+                fontFamily: "var(--font-jetbrains-mono)",
+                fill: "#64748b",
+              }}
               tickLine={false}
             />
             <YAxis
               domain={[3000, 4200]}
-              tick={{ fontSize: 10, fontFamily: 'var(--font-jetbrains-mono)', fill: '#64748b' }}
+              tick={{
+                fontSize: 10,
+                fontFamily: "var(--font-jetbrains-mono)",
+                fill: "#64748b",
+              }}
               tickLine={false}
-              tickFormatter={(v: number) => v.toLocaleString('ko-KR')}
+              tickFormatter={(v: number) => v.toLocaleString("ko-KR")}
             />
             <Tooltip
-              contentStyle={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: 6, fontSize: 12 }}
-              itemStyle={{ fontFamily: 'var(--font-jetbrains-mono)' }}
+              contentStyle={{
+                background: "#0f172a",
+                border: "1px solid #1e293b",
+                borderRadius: 6,
+                fontSize: 12,
+              }}
+              itemStyle={{ fontFamily: "var(--font-jetbrains-mono)" }}
             />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#94a3b8' }} />
+            <Legend wrapperStyle={{ fontSize: 11, color: "#94a3b8" }} />
             <ReferenceLine
-              x="2025년"
-              stroke="#334155"
-              strokeDasharray="4 2"
-              label={{ value: 'Now', fill: '#64748b', fontSize: 10 }}
+              x='2026년'
+              stroke='#334155'
+              strokeDasharray='4 2'
+              label={{ value: "현재", fill: "#64748b", fontSize: 10 }}
             />
             <Line
-              type="monotone"
-              dataKey="actual"
-              name="Actual"
-              stroke="#3b82f6"
+              type='monotone'
+              dataKey='actual'
+              name='Actual'
+              stroke='#3b82f6'
               strokeWidth={2}
-              dot={{ r: 3, fill: '#3b82f6' }}
+              dot={{ r: 3, fill: "#3b82f6" }}
               connectNulls={false}
               isAnimationActive={false}
             />
             <Line
-              type="monotone"
-              dataKey="forecast"
-              name="Forecast"
-              stroke="#10b981"
+              type='monotone'
+              dataKey='forecast'
+              name='Forecast'
+              stroke='#f59e0b'
               strokeWidth={2}
-              strokeDasharray="6 3"
-              dot={{ r: 3, fill: '#10b981' }}
+              strokeDasharray='6 3'
+              dot={{ r: 3, fill: "#f59e0b" }}
               connectNulls={false}
               isAnimationActive={false}
             />
