@@ -9,7 +9,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
-  Cell,
   Legend,
 } from "recharts";
 import { Card } from "@/shared/ui/Card";
@@ -81,16 +80,12 @@ export function CarbonEmissionWidget() {
             <Bar
               dataKey='tCO2'
               name='tCO₂'
+              // Recharts 기본 fill을 사용해 불필요한 Cell 의존을 제거한다.
+              fill='#10b981'
+              fillOpacity={0.9}
               isAnimationActive={false}
-              radius={[3, 3, 0, 0]}>
-              {data.map((_, index) => (
-                <Cell
-                  key={index}
-                  fill='#10b981'
-                  fillOpacity={0.7 + (index / data.length) * 0.3}
-                />
-              ))}
-            </Bar>
+              radius={[3, 3, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>
