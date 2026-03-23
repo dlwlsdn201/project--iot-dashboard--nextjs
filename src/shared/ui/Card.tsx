@@ -33,9 +33,9 @@ export function Card({
       `}>
       {hasHeader && (
         <div
-          className={`shrink-0 px-4 pt-4 pb-2 border-b border-slate-800 flex items-center justify-between gap-2 ${className.header}`}>
+          className={`shrink-0 h-12 px-4 py-3 border-b border-slate-800 flex items-center justify-between gap-2 ${className.header}`}>
           {title && (
-            <h2 className='text-xs font-semibold uppercase tracking-widest text-slate-400'>
+            <h2 className='text-xs font-semibold tracking-widest text-slate-400'>
               {title}
             </h2>
           )}

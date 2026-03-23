@@ -12,8 +12,8 @@ import { NotificationDropdown } from "@/shared/ui/NotificationDropdown";
 export default function DashboardPage() {
   return (
     /*
-      Mobile(< 600px) : body 스크롤 허용, main은 min-h-screen (자연 스크롤)
-      Tablet+(≥ 600px): body height:100% overflow:hidden (globals.css)
+      Mobile(< 768px) : body 스크롤 허용, main은 min-h-screen (자연 스크롤)
+      Tablet+(≥ 768px): body height:100% overflow:hidden (globals.css)
                         main은 mobile:h-full → Header + Grid = 100vh, 스크롤 없음
     */
     <main className='min-h-screen flex flex-col bg-slate-950 mobile:h-full mobile:min-h-0'>
@@ -61,19 +61,19 @@ export default function DashboardPage() {
           <EventAlertsWidget />
         </div>
 
-        <div className='col-span-1 mobile:col-span-1 laptop:col-span-4'>
+        <div className='col-span-1 tablet:col-span-2 laptop:col-span-4'>
           <EnergySourceTrendWidget />
         </div>
 
-        <div className='col-span-1 mobile:col-span-1 laptop:col-span-4'>
+        <div className='col-span-1 tablet:col-span-2 laptop:col-span-4'>
           <CarbonEmissionWidget />
         </div>
 
-        <div className='col-span-1 mobile:col-span-1 laptop:col-span-4'>
+        <div className='col-span-1 tablet:col-span-2 laptop:col-span-4'>
           <YoYComparisonWidget />
         </div>
 
-        <div className='col-span-1 mobile:col-span-1 laptop:col-span-12'>
+        <div className='col-span-1 tablet:col-span-2 laptop:col-span-12'>
           <PredictionChartWidget />
         </div>
       </div>

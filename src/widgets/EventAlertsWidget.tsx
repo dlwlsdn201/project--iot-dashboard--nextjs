@@ -91,7 +91,7 @@ export function EventAlertsWidget() {
 
   return (
     <>
-      <Card title='Event Alerts' headerRight={archiveButton}>
+      <Card title='실시간 이벤트 알림' headerRight={archiveButton}>
         <ul className='flex-1 min-h-0 flex flex-col gap-1.5 overflow-y-auto'>
           {activeEvents.length === 0 ? (
             <li className='flex flex-col items-center justify-center h-full gap-2 text-slate-600 text-xs'>
